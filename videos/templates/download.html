@@ -1,0 +1,50 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="stylesheet" href="{% static 'videos/style2.css'%}">
+<link href='https://fonts.googleapis.com/css?family=Roboto Flex' rel='stylesheet'>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YT Downloader</title>
+</head>
+<body>
+  
+  <div class="logo">
+  <div class="image"><img src="{% static 'videos/logo.png'%}" width="70" height="70"></a></div>
+  <div class="title">YT Downloader</div>
+  </div>
+
+  <div class="container">
+    <div class="thumbnail"><img src={{thumbnail}} width="280" height="200"></div>
+    <div class="download-container">
+        <h6>{{title}}</h6>
+        <h6>Download Video As:</h6>
+<form method="POST">
+  {% csrf_token %}
+    </div>
+        <div class="container-button">
+        <p>720p.mp4 </p>
+        <button class="submit-button" name="720p" onclick="myFunction()" >Download</button>
+        </div>
+
+        <div class="container-button">
+          <p>360p.mp4 </p>
+        <button class="submit-button" name="360p" onclick="myFunction()">Download</button>
+        </div>
+
+        <div class="container-button"><p>720p.mp4 (no sound) </p>
+          <button class="submit-button" name="720pns" onclick="myFunction()">Download</button>
+        </div>
+        <div class="container-button"><p>360p.mp4 (no sound) </p>
+          <button class="submit-button" name="360pns" onclick="myFunction()">Download</button>
+        </div>
+      </form>        
+  </div>
+</body>
+<script>
+  function myFunction() {
+    alert("Downloading Video Please Wait!");
+  }
+  </script>
+</html>

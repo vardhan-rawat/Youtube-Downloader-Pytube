@@ -1,0 +1,28 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="stylesheet" href="{% static 'videos/style1.css'%}">
+<link href='https://fonts.googleapis.com/css?family=Roboto Flex' rel='stylesheet'>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YT Downloader</title>
+</head>
+<body>
+  <div class="logo">
+  <div class="image"><img src="{% static 'videos/logo.png'%}" width="70" height="70"></div>
+  <div class="title">YT Downloader</div>
+  </div>
+  <div class="container">
+    <p class="heading">DOWNLOAD YOUTUBE VIDEOS<br>AS MP4 FOR FREE!</p>
+    <div class="form">
+      <form action="{% url 'searching' %}" method="POST">
+      {% csrf_token %}
+    <div class="input-container">
+      <input type="url" name="linkinp" class="input-field" placeholder="Paste YouTube URL" size="100" required >
+      <button class="sub-button">Look Up</button>
+    </div>
+      </form>
+  </div>
+</body>
+</html>

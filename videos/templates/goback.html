@@ -1,0 +1,21 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="stylesheet" href="{% static 'videos/style1.css'%}">
+<link href='https://fonts.googleapis.com/css?family=Roboto Flex' rel='stylesheet'>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YT Downloader</title>
+</head>
+<body>
+  <div class="logo">
+  <div class="image"><img src="{% static 'videos/logo.png'%}" width="70" height="70"></div>
+  <div class="title">YT Downloader</div>
+  </div>
+  <div class="container">
+    <h1 >"OOPS! AN ERROR OCCURED PLEASE CHECK YOUR LINK AND TRY AGAIN!"</h1>
+    <a href="{% url 'searching' %}"><h1>GO BACK TO HOMEPAGE</h1></a>
+  </div>
+</body>
+</html>
