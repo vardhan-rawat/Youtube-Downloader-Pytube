@@ -8,13 +8,13 @@
       {
         "src": "build.sh",
         "use": "@vercel/static-build",
-        "config": { "distDir": "staticfiles" }
+        "config": { "distDir": "videos/staticfiles" }
       }
     ],
     "routes": [
       {
         "src": "/(.*)",
-        "dest": "your-project-name/wsgi.py"
+        "dest": "youtubedown/wsgi.py"
       },
       {
         "src": "/static/(.*)",
