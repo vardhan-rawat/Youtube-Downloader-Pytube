@@ -85,4 +85,4 @@ def download(request):
     return redirect('searching')
 
 def goback_with_error(request):
-    return render(request, "goback.html", {"error_message": "An error occurred. Please try again."})
+    return render(request, "goback.html")
