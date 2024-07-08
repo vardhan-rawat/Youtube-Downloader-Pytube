@@ -1,51 +1,110 @@
-{% load static%}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<link rel="stylesheet" href="{% static 'videos/style2.css'%}">
-<link href='https://fonts.googleapis.com/css?family=Roboto Flex' rel='stylesheet'>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>YT Downloader</title>
+  <link rel="stylesheet" href="{% static 'videos/style2.css' %}">
+  <link href='https://fonts.googleapis.com/css?family=Roboto+Flex' rel='stylesheet'>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YT Downloader</title>
 </head>
 <body>
-  
   <div class="logo">
-  <div class="image"><img src="{% static 'videos/logo.png'%}" width="70" height="70"></a></div>
-  <div class="title">YT Downloader</div>
+    <a href="{% url 'searching' %}">
+      <div class="image"><img src="{% static 'videos/logo.png' %}" width="70" height="70"></div>
+    </a>
+    <div class="title">YT Downloader</div>
   </div>
 
   <div class="container">
-    <div class="thumbnail"><img src={{thumbnail}} width="280" height="200"></div>
+    <div class="thumbnail"><img src="{{ thumbnail }}" width="280" height="200"></div>
     <div class="download-container">
-        <h6>{{title}}</h6>
-        <h6>Download Video As:</h6>
-<form method="POST">
-  {% csrf_token %}
-    </div>
+      <h6>{{ title }}</h6>
+      <h6>Download Video As:</h6>
+      <form id="downloadForm" method="POST">
+        {% csrf_token %}
         <div class="container-button">
-        <p>720p.mp4 (currently unavailable) </p>
-        <button class="submit-button" name="720p" onclick="myFunction()" disabled >Download</button>
+          <p>720p.mp4 (currently unavailable) </p>
+          <button class="submit-button" name="720p" onclick="startDownload(event, '720p')" disabled>Download</button>
         </div>
-
         <div class="container-button">
           <p>360p.mp4 </p>
-        <button class="submit-button" name="360p" onclick="myFunction()">Download</button>
+          <button class="submit-button" name="360p" onclick="startDownload(event, '360p')">Download</button>
         </div>
-
-        <div class="container-button"><p>720p.mp4 (no sound) </p>
-          <button class="submit-button" name="720pns" onclick="myFunction()">Download</button>
+        <div class="container-button">
+          <p>1080p.mp4 🔇 </p>
+          <button class="submit-button" name="1080pns" onclick="startDownload(event, '1080pns')">Download</button>
         </div>
-        <div class="container-button"><p>360p.mp4 (no sound) </p>
-          <button class="submit-button" name="360pns" onclick="myFunction()">Download</button>
+        <div class="container-button">
+          <p>720p.mp4 🔇 </p>
+          <button class="submit-button" name="720pns" onclick="startDownload(event, '720pns')">Download</button>
         </div>
-      </form>        
+        <div class="container-button">
+          <p>360p.mp4 🔇</p>
+          <button class="submit-button" name="360pns" onclick="startDownload(event, '360pns')">Download</button>
+        </div>
+        <div class="container-button">
+          <p>audio 🎧 (codec:mp4a.40.5) </p>
+          <button class="submit-button" name="audio" onclick="startDownload(event, 'audio')">Download</button>
+        </div>
+      </form>
+    </div>
   </div>
-</body>
-<script>
-  function myFunction() {
-    alert("Downloading Video Please Wait!");
-  }
-  </script>
-</html> 
 
+  <!-- Loader overlay with spinner -->
+  <div class="loader-overlay" id="loader">
+    <div class="loader-box">
+      <div class="loader"></div>
+      <div class="text">Downloading, Please Wait...</div>
+    </div>
+  </div>
+
+  <script>
+function startDownload(event, quality) {
+    event.preventDefault(); // Prevent the default form submission action
+
+    const formData = new FormData(document.getElementById('downloadForm'));
+    formData.append('url', new URLSearchParams(window.location.search).get('url'));  // Append the video URL
+    formData.append(quality, 'true');  // Add the selected quality to the form data
+
+    // Show the loader overlay
+    document.getElementById('loader').style.display = 'block';
+
+    // Make an AJAX request to the server to start the download
+    fetch(window.location.href, {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+        }
+    })
+    .then(response => {
+        if (!response.ok || response.headers.get('X-Download-Success') !== 'true') {
+            throw new Error('Network response was not ok');
+        }
+        return response.blob();  // Get the response as a Blob
+    })
+    .then(blob => {
+        // Create a download link and simulate a click to start the download
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = '{{title}}.mp4';  // Provide a default filename
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);  // Clean up the URL object
+
+        // Hide the loader overlay
+        document.getElementById('loader').style.display = 'none';
+    })
+    .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+        
+        // Redirect to the error page on failure
+        window.location.href = "{% url 'goback_with_error' %}";
+    });
+}
+  </script>
+</body>
+</html>
