@@ -151,7 +151,7 @@ LOGGING = {
             'level': 'DEBUG',
             'propagate': True,
         },
-        'your_app_name': {
+        'videos': {
             'handlers': ['file'],
             'level': 'DEBUG',
             'propagate': True,
