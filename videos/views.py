@@ -6,8 +6,7 @@ from django.urls import reverse
 import io
 import logging
 
-# Set up logging
-logger = logging.getLogger(__name__)
+
 
 def searching(request):
     if request.method == "POST":
@@ -17,7 +16,6 @@ def searching(request):
             target_url = reverse('download') + f'?{query_params}'
             return redirect(target_url)
         else:
-            logger.error("No URL provided in POST request")
             return redirect('goback_with_error')
     return render(request, "index.html")
 
@@ -35,10 +33,8 @@ def download(request):
                 }
                 return render(request, "download.html", data)
             except Exception as e:
-                logger.error(f"Error fetching YouTube video: {e}")
                 return redirect('goback_with_error')
         else:
-            logger.error("No URL provided in GET request")
             return redirect('goback_with_error')
 
     elif request.method == "POST":
@@ -72,14 +68,11 @@ def download(request):
                     response['X-Download-Success'] = 'true'
                     return response
                 else:
-                    logger.error("No suitable stream found")
                     return JsonResponse({'error': 'No suitable stream found'}, status=500)
 
             except Exception as e:
-                logger.error(f"Error downloading video: {e}")
                 return JsonResponse({'error': 'Error downloading video'}, status=500)
         else:
-            logger.error("No URL provided in POST request")
             return redirect('goback_with_error')
 
     return redirect('searching')
