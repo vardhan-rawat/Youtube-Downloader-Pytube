@@ -24,7 +24,6 @@ SECRET_KEY = 'django-insecure-e9y7df*ymjx_cfb2v7#s1f*)=xjh@tir*fpp-s7lke^6(&e-*b
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 ALLOWED_HOSTS = ['.vercel.app', '127.0.0.1']
 
 
@@ -135,26 +134,3 @@ STORAGES = {
 }
 STATIC_ROOT = os.path.join(BASE_DIR, "videos/staticfiles")
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'file': {
-            'level': 'DEBUG',
-            'class': 'logging.FileHandler',
-            'filename': BASE_DIR / 'debug.log',
-        },
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['file'],
-            'level': 'DEBUG',
-            'propagate': True,
-        },
-        'videos': {
-            'handlers': ['file'],
-            'level': 'DEBUG',
-            'propagate': True,
-        },
-    },
-}
