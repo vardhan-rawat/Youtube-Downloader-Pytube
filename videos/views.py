@@ -20,6 +20,7 @@ def searching(request):
             return redirect('goback_with_error')
     return render(request, "index.html")
 
+
 def download(request):
     if request.method == "GET":
         url = request.GET.get('url')
