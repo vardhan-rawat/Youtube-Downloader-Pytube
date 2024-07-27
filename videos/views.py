@@ -50,7 +50,7 @@ cipher.get_throttling_function_name = get_throttling_function_name
 
 def stream_video(request, video_stream):
     """Stream the video data in chunks."""
-    chunk_size = 5 * 1024 * 1024  # 5 MB
+    chunk_size = 2 * 1024 * 1024  # 5 MB
 
     def generate():
         with io.BytesIO() as buffer:
@@ -64,7 +64,6 @@ def stream_video(request, video_stream):
 
     return StreamingHttpResponse(generate(), content_type='video/mp4')
 
-    return StreamingHttpResponse(generate(), content_type='video/mp4')
 
 def searching(request):
     if request.method == "POST":
