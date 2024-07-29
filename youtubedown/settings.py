@@ -24,7 +24,7 @@ SECRET_KEY = 'django-insecure-e9y7df*ymjx_cfb2v7#s1f*)=xjh@tir*fpp-s7lke^6(&e-*b
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['https://mp4yt.azurewebsites.net']
 CSRF_TRUSTED_ORIGINS = [
     'https://mp4yt.azurewebsites.net',
 ]
