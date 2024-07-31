@@ -52,7 +52,7 @@
     </div>
   </div>
 
-  <!-- Loader overlay with spinner -->
+  <!-- Loader -->
   <div class="loader-overlay" id="loader">
     <div class="loader-box">
       <div class="loader"></div>
@@ -62,16 +62,15 @@
 
   <script>
 function startDownload(event, quality) {
-    event.preventDefault(); // Prevent the default form submission action
+    event.preventDefault(); 
 
     const formData = new FormData(document.getElementById('downloadForm'));
-    formData.append('url', new URLSearchParams(window.location.search).get('url'));  // Append the video URL
-    formData.append(quality, 'true');  // Add the selected quality to the form data
+    formData.append('url', new URLSearchParams(window.location.search).get('url')); 
+    formData.append(quality, 'true');  
 
-    // Show the loader overlay
+    
     document.getElementById('loader').style.display = 'block';
 
-    // Make an AJAX request to the server to start the download
     fetch(window.location.href, {
         method: 'POST',
         body: formData,
@@ -83,26 +82,23 @@ function startDownload(event, quality) {
         if (!response.ok || response.headers.get('X-Download-Success') !== 'true') {
             throw new Error('Network response was not ok');
         }
-        return response.blob();  // Get the response as a Blob
+        return response.blob();  
     })
     .then(blob => {
-        // Create a download link and simulate a click to start the download
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = '{{title}}.mp4';  // Provide a default filename
+        a.download = '{{title}}.mp4';  
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
-        URL.revokeObjectURL(url);  // Clean up the URL object
+        URL.revokeObjectURL(url);  
 
-        // Hide the loader overlay
         document.getElementById('loader').style.display = 'none';
     })
     .catch(error => {
         console.error('There was a problem with the fetch operation:', error);
         
-        // Redirect to the error page on failure
         window.location.href = "{% url 'goback_with_error' %}";
     });
 }
