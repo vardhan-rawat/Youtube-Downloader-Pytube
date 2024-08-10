@@ -1,7 +1,7 @@
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
-# from pytube import YouTube
-from pytubefix import YouTube
+from pytube import YouTube
+# from pytubefix import YouTube
 from urllib.parse import urlencode
 from django.urls import reverse
 import io
