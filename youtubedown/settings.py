@@ -25,9 +25,9 @@ SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-ALLOWED_HOSTS = ['mp4yt.azurewebsites.net','127.0.0.1']
+ALLOWED_HOSTS = ['mp4yt-fbb4c4d2geehbygc.centralindia-01.azurewebsites.net','127.0.0.1']
 CSRF_TRUSTED_ORIGINS = [
-    'https://mp4yt.azurewebsites.net',
+    'https://mp4yt-fbb4c4d2geehbygc.centralindia-01.azurewebsites.net/',
 ]
 
 # Application definition
