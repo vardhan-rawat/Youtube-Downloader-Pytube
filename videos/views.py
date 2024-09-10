@@ -14,8 +14,8 @@ def searching(request):
             query_params = urlencode({'url': url})
             target_url = reverse('download') + f'?{query_params}'
             return redirect(target_url)
-        # else:
-        #     return redirect('goback_with_error')
+        else:
+            return redirect('goback_with_error')
     return render(request, "index.html")
 
 
@@ -23,7 +23,7 @@ def download(request):
     if request.method == "GET":
         url = request.GET.get('url')
         if url:
-            # try:
+            try:
                 obj = YouTube(url)
                 title = obj.title
                 thumbnail = obj.thumbnail_url
@@ -32,15 +32,15 @@ def download(request):
                     "thumbnail": thumbnail,
                 }
                 return render(request, "download.html", data)
-            # except Exception as e:
-            #     return redirect('goback_with_error')
-        # else:
-        #     return redirect('goback_with_error')
+            except Exception as e:
+                return redirect('goback_with_error')
+        else:
+            return redirect('goback_with_error')
 
     elif request.method == "POST":
         url = request.GET.get('url')
         if url:
-            # try:
+            try:
                 obj = YouTube(url)
                 title = obj.title
 
@@ -69,10 +69,10 @@ def download(request):
                 else:
                     return JsonResponse({'error': 'No suitable stream found'}, status=500)
 
-            # except Exception as e:
-            #     return JsonResponse({'error': 'Error downloading video'}, status=500)
-        # else:
-        #     return redirect('goback_with_error')
+            except Exception as e:
+                return JsonResponse({'error': 'Error downloading video'}, status=500)
+        else:
+            return redirect('goback_with_error')
 
     return redirect('searching')
 
