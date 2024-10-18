@@ -37,5 +37,5 @@ Frontend: HTML, CSS, JavaScript
 4. Download the video and enjoy!
 
 ## Deployment
-The application is deployed and can be accessed at: https://mp4yt.azurewebsites.net/
+The application is deployed and can be accessed at: https://mp4yt-fbb4c4d2geehbygc.centralindia-01.azurewebsites.net/
 
